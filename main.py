@@ -1,3 +1,4 @@
+#this is main function for algorithm
 import scipy.io as scio
 import math
 
@@ -20,7 +21,8 @@ def oneToAction(position):
     if position == 3: #'<'
         return (0,-1)          
     if position == 1: #'>'
-        return (0, 1)            
+        return (0,     #dataModel.printData()
+1)            
 
 def readMat():
     dataFile = 'randTraj100.mat'

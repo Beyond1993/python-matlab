@@ -57,6 +57,7 @@ class FittedQIteration(object):
                 self.Q_function[state][action] = self.getQ(state,action)
    
     def set_Policy(self):
+        #self.Q-function is dict , self.Q_function[state] is also a dict, self.Q_function[state] = {action1,action2,action3,action4}
         for state, actions in self.Q_function.iteritems(): #actions is a dict
             new_pi = max(actions.iteritems(), key=operator.itemgetter(1))[0] 
             #operator.itemgetter(1) is the value of actions.iteritems() , use this value as a key to get max action for per state
@@ -191,7 +192,7 @@ class FittedQIteration(object):
         prev_Q_function = collections.defaultdict(lambda: collections.defaultdict(lambda: 0))
         
         
-        dataset = self.build_dataset(data)# even data is same ,the Q_function is different
+        #dataset = self.build_dataset(data)# even data is same ,the Q_function is different
         
         for iteration in range(self.max_iterations):
             print 'the ',iteration,'iteration'
