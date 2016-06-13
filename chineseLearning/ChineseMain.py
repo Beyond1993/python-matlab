@@ -6,12 +6,13 @@ if __name__ == '__main__':
   
     dataModel = dataModel()
     trainData = dataModel.buildRecords()    
+    #testData=dataModel.get_Features_Targets()
     
     ChineseFQI = FittedQIteration(max_iterations=10, epsilon=0.00001, discount=0.9)
     ChineseFQI.run(trainData)
     
-    dataModel.get_Features_Targets()
-    ChineseFQI.evaluate(ChineseFQI.features_targets_dict)
+    
+    #ChineseFQI.evaluate(testData)
     
     
 

@@ -172,10 +172,10 @@ class FittedQIteration(object):
         self.set_V()
         self.set_Policy()
         
-    def evaluate(self,features_targets):
-        for feature,target in features_target:
-            prediction = self.policy(feature);
+    def evaluate(self,features_targets_dict):
+        for user_card,feature_target in features_targets_dict.iteritems():
+            prediction = self.policy(feature_target[0])
             
-            print "pediction is",prediction,"target is",target
+            print "pediction is",prediction,"target is",feature_target[1]
         
 

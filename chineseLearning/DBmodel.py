@@ -6,6 +6,7 @@ class dataModel():
         self.users = []
         self.cards = []
         self.conn = sqlite3.connect('data10000.db')
+        print 'connect successfully'
         self.allRecordsDict = collections.defaultdict(lambda: 0)
         self.allRecordsList = []
         
@@ -129,7 +130,7 @@ class dataModel():
             for card in self.cards:
                 self.buildRecord(user, card)
         data = self.convertDictToList()
-        self.destory()
+        #self.destory()
         return data
     
     def get_Feature_Target(self,user,card):
@@ -148,24 +149,33 @@ class dataModel():
                 action = row[5] #easiness = row[5]
                 grade = row[4] #grade = row[4]
                 isFiveShowFirst = 1
-            if row[4] == 0 & isFiveShowFirst == 1:
+            if row[4] == 1 & isFiveShowFirst == 1:
                 next_state = (row[9],row[10],row[11],row[12])
                 next_action = row[5] #easiness = row[5]
                 next_grade = row[4]
                 easiness = row[5] 
-                feature_target.append((state,action,self.getReward(grade,next_grade),next_state),easiness)
+                feature_target.append(((state,action,self.getReward(grade,next_grade),next_state),easiness))
+        
+        return feature_target
                 
-        if len(features_targets) == 0:
-            print "None"
-            debug  =1
-        else:
-            #print "building"
-            self.features_targets_dict[(user,card)] = feature_target            
-            
-    def get_Feature_Target(self):
+
+    def get_Features_Targets(self):
         for user in self.users:
-            for card in self.card:
-                self.get_Feature_Target(user,card)
+            for card in self.cards:
+                feature_target = self.get_Feature_Target(user,card)
+                if len(feature_target) == 0:
+                    print "None"
+                    debug  =1
+                else:
+                    print "get feature_target"
+                    self.features_targets_dict[(user,card)] = feature_target    
+            
+        self.destory()
+        
+        return self.features_targets_dict
+        
+        
+        
         
     def destory(self):
         self.conn.close()
