@@ -132,49 +132,8 @@ class dataModel():
         data = self.convertDictToList()
         #self.destory()
         return data
-    
-    def get_Feature_Target(self,user,card):
-        sql = "select * from log where user_id = \'"+user+"\' and object_id= \'"+card+"\'"
-        res = self.conn.execute(sql)
-        
-      
-        feature_target = []
-        last_state = 0
-        last_action = 0      
-        last_reward = 0
-        isFiveShowFirst = 0
-        for row in res:
-            if row[4] == 5:
-                state  = (row[9],row[10],row[11],row[12])
-                action = row[5] #easiness = row[5]
-                grade = row[4] #grade = row[4]
-                isFiveShowFirst = 1
-            if row[4] == 1 & isFiveShowFirst == 1:
-                next_state = (row[9],row[10],row[11],row[12])
-                next_action = row[5] #easiness = row[5]
-                next_grade = row[4]
-                easiness = row[5] 
-                feature_target.append(((state,action,self.getReward(grade,next_grade),next_state),easiness))
-        
-        return feature_target
-                
 
-    def get_Features_Targets(self):
-        for user in self.users:
-            for card in self.cards:
-                feature_target = self.get_Feature_Target(user,card)
-                if len(feature_target) == 0:
-                    print "None"
-                    debug  =1
-                else:
-                    print "get feature_target"
-                    self.features_targets_dict[(user,card)] = feature_target    
-            
-        self.destory()
-        
-        return self.features_targets_dict
-        
-        
+
         
         
     def destory(self):
