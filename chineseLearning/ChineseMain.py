@@ -1,5 +1,6 @@
 from ChineseFQI import FittedQIteration
 from DBmodel import dataModel
+from testData import testDataModel
 
 
 if __name__ == '__main__':

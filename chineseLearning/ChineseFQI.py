@@ -7,7 +7,7 @@ import math
 import copy
 import operator
 import time
-import pickle
+
 
 
 
@@ -84,11 +84,11 @@ class FittedQIteration(object):
     def build_dataset(self, data):
         
         print "build dataset"
-        time1 = time.time()
+        time1 = time.clock()
         dataset = []
         
         for key, (state, action, reward, newState) in data.iteritems():
-            print "building"
+           # print "building"
             # over the newState and newAction because it's what's next
             
             target = reward + self.discount * max(self.getQ(newState, newAction) for newAction in self.actions)
@@ -100,8 +100,8 @@ class FittedQIteration(object):
                     #print 'maxQ',max(self.getQ(newState, newAction) for newAction in self.actions)
                     
             dataset.append((state, action, target))
-        time2 = time.time();
-        print "building end",time2-time1
+        time2 = time.clock();
+        print "build: %f s",(time2 - time1)
         return dataset
     
     
@@ -135,6 +135,7 @@ class FittedQIteration(object):
     def train_neural_network(self,dataset):
         
         print 'train start'  
+        time1 = time.clock()
         #print max(self.getQ((1,0), newAction) for newAction in self.actions)
         for state, action, target in dataset:
             
@@ -148,7 +149,8 @@ class FittedQIteration(object):
             self.learner.train_on_batch(d,y)
                 #if (state == (1,0) )& (action == (0,1)):    
                     #print target,self.learner.predict(self.get_feature((1,0), (0,1)))
-        print 'train end'
+        time2 = time.clock()
+        print 'train %f s',(time2 - time1)
         #self.learner = copy.deepcopy(self.learner)##??
         #print self.learner.predict(self.get_feature((1,0), (0,1)))
         debug = 0

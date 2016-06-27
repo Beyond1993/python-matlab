@@ -131,8 +131,7 @@ if __name__ == '__main__':
     testDataModel = testDataModel()
     #testDataModel.printData()
 
-    testDataModel.get_Features_Targets()
-    
+    testData = testDataModel.get_Features_Targets()
     
     debug = 0
 
